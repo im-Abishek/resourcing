@@ -210,8 +210,9 @@ h1, h2, h3, h4, h5, h6 {
 /* Card */
 .card {
   margin-bottom: 30px;
+  margin-top: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
 
@@ -842,10 +843,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 .iconslist .icon {
   background-color: #fff;
-  border-radius: 0.25rem;
+  border-radius: 10px;
   text-align: center;
   color: #012970;
   padding: 15px 0;
+  border: 1px solid rgb(224, 227, 231);
+}
+.icon:hover{
+  background-color: rgb(224, 227, 231);
 }
 .iconslist i {
   margin: 0.25rem;
@@ -1078,7 +1083,32 @@ h1, h2, h3, h4, h5, h6 {
 
 /* New Dashboard */
 
-/* ._main_dasboard{
-  margin: 3rem !important;
-  margin-left: 20% !important;
+._label_resourcing{
+  font-size: 15px;
+  font-weight: 400;
+  color: #012970;
+}
+td,th{
+  text-align: center;
+  /* border: 1px black !important; */
+}
+.resourcing_info{
+  margin-top: 1rem;
+  height: 2.5rem;
+  border-radius: 5px;
+  border: 1px solid rgb(224, 227, 231);
+  align-items: center;
+  background-color: white;
+}
+thead{
+  border: 1px black !important;
+}
+/* .alert-box-db{
+  display: none;
 } */
+.image-gif{
+  display: none;
+}
+.justify-login{
+  margin-bottom: 3rem;
+}
