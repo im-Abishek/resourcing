@@ -11,6 +11,27 @@
 :root {
   scroll-behavior: smooth;
 }
+.small-box {
+  display: flex;
+  flex-direction: column;
+}
+#button{
+width: 50%;
+}
+.btnCheck{
+display: flex;
+justify-content: center;
+flex-direction: column;
+}
+
+.iconslist .icon {
+  background-color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  color: #012970;
+  padding: 15px 44px!important;
+  border: 1px solid rgb(224, 227, 231);
+}
 
 body {
   font-family: "Open Sans", sans-serif;

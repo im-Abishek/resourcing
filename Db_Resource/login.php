@@ -1,7 +1,9 @@
+
+<?php include('sql.php')?>
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head></head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -63,13 +65,17 @@
                     <!-- <p class="text-center small">Enter your username & password to login</p> -->
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
-
+                  <form class="row g-3 needs-validation" action="logincheck.php" method="post" autocomplete="on" novalidate>
+                  <?php if (isset($_GET['error'])) { ?>
+     		<p class="error"><?php echo $_GET['error']; ?></p>
+     	<?php } ?>
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <label for="yourUsername" class="form-label">Email</label>
+                      <?php if(!empty($email)){ echo "<div class='alert alert-danger'>" . $email . "</div>"; }
+?>
                       <div class="input-group has-validation">
-                        <input type="text" name="username" class="form-control" id="yourUsername" placeholder="User Name" required>
-                        <div class="invalid-feedback">Please enter your username.</div>
+                        <input type="text" name="email" class="form-control" id="yourUsername" placeholder="Email" required>
+                        <div class="invalid-feedback">Please enter your email.</div>
                       </div>
                     </div>
 
