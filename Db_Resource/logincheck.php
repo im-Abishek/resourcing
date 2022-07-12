@@ -42,8 +42,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             if ($row['email'] === $email && $row['password'] === $pass) {
 				$_SESSION['username'] = $row['username'];
 				$_SESSION['id'] = $row['id'];
-				$value = 'something from somewhere';
-                setcookie("TestCookie", $value);
+				// $value = 'something from somewhere';
+                // setcookie("TestCookie", $value);
 
             	header("Location: index.php");
 		        exit();

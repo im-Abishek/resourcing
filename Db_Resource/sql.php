@@ -11,10 +11,10 @@
     $password='';
     $dbre='db_resource';
     $conn=mysqli_connect($url,$username,$password,$dbre);
-     if($conn){
-              echo "Successfully connected to server";
-          }
-          else{
-              echo "Failed";
-          }
+    //  if($conn){
+    //           echo "Successfully connected to server";
+    //       }
+    //       else{
+    //           echo "Failed";
+    //       }
 ?>
