@@ -617,7 +617,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   margin: 10px 0 5px 15px;
 }
-.sidebar-nav .nav-link {
+.nav-link {
   display: flex;
   align-items: center;
   font-size: 15px;
@@ -1125,9 +1125,6 @@ td,th{
 thead{
   border: 1px black !important;
 }
-/* .alert-box-db{
-  display: none;
-} */
 .image-gif{
   display: none;
 }
