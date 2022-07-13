@@ -10,6 +10,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 	<head>
 		<title>Change Password</title>
 		<link rel="stylesheet" type="text/css" href="assets/css/scustom.css">
+		<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 
 	</head>
 	<style>
@@ -29,7 +31,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 
 		h2 {
 			text-align: center;
-			margin-bottom: 40px;
 		}
 
 		input {
@@ -37,14 +38,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 			border: 2px solid #ccc;
 			width: 95%;
 			padding: 10px;
-			margin: 10px auto;
 			border-radius: 5px;
 		}
 
 		label {
 			color: #888;
 			font-size: 18px;
-			padding: 10px;
 		}
 
 		form,
@@ -80,20 +79,15 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 			<?php } ?>
 
 
-
-			<label>Old Password</label>
-			<input type="password" name="op" placeholder="Old Password">
+			<label class="change-pass-label">New Password</label>
+			<input type="password" name="np" placeholder="New Password" class="change-pass-input">
 			<br>
 
-			<label>New Password</label>
-			<input type="password" name="np" placeholder="New Password">
+			<label class="change-pass-label">Confirm New Password</label>
+			<input type="password" name="c_np" placeholder="Confirm New Password" class="change-pass-label">
 			<br>
 
-			<label>Confirm New Password</label>
-			<input type="password" name="c_np" placeholder="Confirm New Password">
-			<br>
-
-			<button type="submit">CHANGE</button>
+			<button class="btn btn-primary" type="submit">CHANGE</button>
 
 			<a href="index.php" class="ca">HOME</a>
 		</form>

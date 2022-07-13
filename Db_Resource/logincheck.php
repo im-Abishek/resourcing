@@ -42,6 +42,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             if ($row['email'] === $email && $row['password'] === $pass) {
 				$_SESSION['username'] = $row['username'];
 				$_SESSION['id'] = $row['id'];
+				$_SESSION['password'] = $row['password'];
 				// $value = 'something from somewhere';
                 // setcookie("TestCookie", $value);
 

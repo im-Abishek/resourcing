@@ -15,14 +15,10 @@ if (isset($_POST['op']) && isset($_POST['np'])
 	   return $data;
 	}
 
-	$op = validate($_POST['op']);
 	$np = validate($_POST['np']);
 	$c_np = validate($_POST['c_np']);
     
-    if(empty($op)){
-      header("Location: change-password.php?error=Old Password is required");
-	  exit();
-    }else if(empty($np)){
+    if(empty($np)){
       header("Location: change-password.php?error=New Password is required");
 	  exit();
     }else if($np !== $c_np){
@@ -33,10 +29,14 @@ if (isset($_POST['op']) && isset($_POST['np'])
     	// $op = ($op);
     	// $np = ($np);
         $id = $_SESSION['id'];
+		$op=$_SESSION['password'];
 
         $sql = "SELECT * FROM users WHERE id='$id' AND password='$op'";
 		// var_dump($sql);
         $result = mysqli_query($conn, $sql);
+		// echo '<pre>';
+		// print_r($op);
+		// die;
         if(mysqli_num_rows($result) === 1){
         	
         	$sql_2 = "UPDATE users
@@ -55,7 +55,7 @@ if (isset($_POST['op']) && isset($_POST['np'])
 			
 
         }else {
-        	header("Location: change-password.php?error=Incorrect password");
+        	header("Location: index.php?error=Incorrect password");
 	        exit();
         }
 
@@ -63,11 +63,13 @@ if (isset($_POST['op']) && isset($_POST['np'])
 
     
 }else{
-	header("Location: change-password.php");
+	// header("Location: index.php");
+	echo 'error';
 	exit();
 }
 
 }else{
-     header("Location: index.php");
+    //  header("Location: index.php");
+	echo 'error';
      exit();
 }

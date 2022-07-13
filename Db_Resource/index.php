@@ -6,7 +6,7 @@ $result = mysqli_query($conn, $sql);
 $checkRecord = $result->fetch_array();
 $checkCount = $result->num_rows;
 
-if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
+if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['password']) ) {
 
   ?>
   <!DOCTYPE html>
@@ -47,7 +47,13 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-  </head>
+<style>
+
+  #change-pass-box{
+    display: none
+  }
+</style>  
+</head>
 
   <body>
 
@@ -80,21 +86,53 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li>
-                <a class="dropdown-item d-flex align-items-center" href="change-password.php">
+      
+              <li >
+                <a class="dropdown-item d-flex align-items-center"  id="change-pass" onclick="getPass();">
                   <i class="bi bi-gear"></i>
                   <span>Change Password</span>
+                  
                 </a>
               </li>
               <li>
                 <hr class="dropdown-divider">
               </li>
+              
+           
+              <li  
+              class="" id="change-pass-box">
+              <form action="change-p.php" method="post" autocomplete="off">
+                 <?php if (isset($_GET['error'])) { ?>
+			           	<p class="error" role="alert"><?php echo $_GET['error']; ?></p>
+			           <?php } ?>
+                <a class="dropdown-item d-flex flex-column align-items-left">
+                  <label class="change-pass-label">New Password</label>
+			            <input type="password" name="np" placeholder="New Password" class="change-pass-input">
+                </a>
+                
+			            <input type="hidden" name="op" placeholder="Old Password">
+
+                <a class="dropdown-item d-flex flex-column align-items-left">
+                  <label class="change-pass-label">Confirm New Password</label>
+			            <input type="password" name="c_np" placeholder="Confirm New Password" class="change-pass-input">
+                </a>
+                <button class="btn btn-primary ml-3 mb-3" style="font-size: 14px;" type="submit">CHANGE</button>
+              </li>
+              <li id="change-pass-box">
+                <hr class="dropdown-divider">
+                </form>
+              </li>
+          
+              
+            
               <li>
                 <a class="dropdown-item d-flex align-items-center" href="logout.php">
                   <i class="bi bi-box-arrow-right"></i>
                   <span>Sign Out</span>
                 </a>
               </li>
+ 
+
 
             </ul><!-- End Profile Dropdown Items -->
           </li><!-- End Profile Nav -->
@@ -107,10 +145,10 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
 
-      <ul class="sidebar-nav" id="sidebar-nav">
+      <ul class="sidebar-nav" id="sidebar-nav nav-side-clr">
 
         <li class="nav-item">
-          <a class="nav-link" href="index.php">
+          <a class="nav-link" onclick="clrChange();" href="index.php">
             <i class="bi bi-grid"></i>
             <span>UAT</span>
           </a>
@@ -186,7 +224,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
         <div class="row">
           <div id="alert-info-db" value="3" class="alert alert-danger alert-dismissible fade show mt-3 alert-box-db" role="alert">
           <MARquee>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> database is currently resourcing.....</MARquee>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         </div>
       <?php } ?>
@@ -337,9 +374,23 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       function getDb(name) {
         $('#getDb').val(name);
       }
+     
       $(document).ready(function() {
         $('#example').DataTable();
       });
+
+      function getPass() {
+        $('#change-pass').click(function(){
+          $('#change-pass-box').attr("style", "display:block")
+          console.log('clicked');
+        })
+      }
+      $(document).ready(function() {
+       getPass();
+      });
+      function clrChange() {
+          document.getElementById('nav-side-clr').style.cssText = 'background-color: red; color: white; 
+      }
     </script>
 
   </body>
