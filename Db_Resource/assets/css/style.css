@@ -10,6 +10,7 @@
 --------------------------------------------------------------*/
 :root {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 .small-box {
   display: flex;

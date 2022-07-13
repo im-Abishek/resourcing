@@ -1,7 +1,7 @@
 <?php include('sql.php');
 
 session_start();
-$sql = "select * from requests where status=0";
+$sql = "select * from requests where status=0 AND environment='Staging'";
 $result = mysqli_query($conn, $sql);
 $checkRecord = $result->fetch_array(); 
 $checkCount = $result->num_rows;
@@ -133,7 +133,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       </div>
       <div class="iconslist">
         <div class="icon-root">
-          <div class="icon" type="button" <?php if ($checkCount !== 1) {
+          <div class="icon" type="button" <?php if ($checkCount !== 0) {
                                               echo "onclick='changeImage1('images/disk.gif');'";
                                             } ?>>
             <img id="img1" class="image-png" src="images/disk.png" height="60" value="1">
@@ -149,7 +149,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                                               echo "onclick='changeImage1('images/disk.gif');'";
                                             } ?>>
             <img id="img2" class="image-png" src="images/disk.png" height="60" value="2">
-            <button type="button" id="Model_box" id="button" class="btn BtnResources2 btn-primary" <?php if ($checkCount !== 1) {
+            <button type="button" id="Model_box" id="button" class="btn BtnResources2 btn-primary" <?php if ($checkCount !== 0) {
                                                                                                         echo 'disabled';
                                                                                                       } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="grls_resource" onclick="getDb('GRLS');" data-bs-whatever="@getbootstrap"><span><b>GRLS</b></span> Resource</button>
 
@@ -161,7 +161,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                                               echo "onclick='changeImage1('images/disk.gif');'";
                                             } ?>>
             <img id="img3" class="image-png" src="images/disk.png" height="60" value="3">
-            <button type="button" id="Model_box" id="button" class="btn BtnResources3 btn-primary" <?php if ($checkCount !== 1) {
+            <button type="button" id="Model_box" id="button" class="btn BtnResources3 btn-primary" <?php if ($checkCount !== 0) {
                                                                                                         echo 'disabled';
                                                                                                       } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="uk_resource" onclick="getDb('UK');" data-bs-whatever="@getbootstrap"><span><b>UK</b></span> Resource</button>
           </div>
@@ -172,7 +172,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                                               echo "onclick='changeImage1('images/disk.gif');'";
                                             } ?>>
             <img id="img4" class="image-png" src="images/disk.png" height="60" value="4">
-            <button type="button" id="Model_box" id="button" class="btn BtnResources4 btn-primary" <?php if ($checkCount !== 1) {
+            <button type="button" id="Model_box" id="button" class="btn BtnResources4 btn-primary" <?php if ($checkCount !== 0) {
                                                                                                         echo 'disabled';
                                                                                                       } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="ca_resource" onclick="getDb('CA');" data-bs-whatever="@getbootstrap"><span><b>CA</b></span> Resource</button>
           </div>
@@ -182,8 +182,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       </div>
       <?php if ($checkCount !== 0) { ?>
         <div class="row">
-          <div id="alert-info-db" value="3" class="alert alert-primary alert-dismissible fade show mt-3 alert-box-db" role="alert">
-            The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> database is currently resourcing.....
+        <div id="alert-info-db" value="3" class="alert alert-danger alert-dismissible fade show mt-3 alert-box-db" role="alert">
+        <MARquee>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> database is currently resourcing.....</MARquee>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         </div>
@@ -216,14 +216,14 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <input type="hidden" id="getEnv" value="UAT" name="Environment">
+                <input type="hidden" id="getEnv" value="Staging" name="Environment">
                 <input type="hidden" id="getDb" value="" name="Db">
                 <h5 class="modal-title" id="exampleModalLabel">New message</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <!-- <form action="" method="POST"> -->
-                <input type="datetime-local" name="date" style="width: position: relative; width: 60.5% ;">
+                <input type="date" name="date" style="width: position: relative; width: 60.5% ;">
                 <!-- <input type="submit" name="submit" value="submit"> -->
                 <!-- </form> -->
                 <div class="mb-3">
@@ -261,7 +261,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
             </thead>
             <tbody>
               <?php
-                $sql = "SELECT * FROM requests";
+               $sql = "SELECT * FROM requests ORDER BY id DESC";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                   // output data of each row
@@ -270,9 +270,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                   while ($row = $result->fetch_assoc()) {
                     $t = ($row["requested_by"] == $_SESSION['id']) ? $_SESSION['username'] : 'no user found';
                     if ($row['status'] == 0) {
-                      $status = 'In progress';
+                      $status = '<P style="color:red">In progress</P>';
                     } elseif ($row['status'] == 1) {
-                      $status =  'Completed';
+                      $status =  '<P style="color:Green">Completed</P>';
                     } else {
                       $status = 'Failed';
                     }
@@ -296,7 +296,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                     echo " <td class='text-center text-muted'>{$row["completed_at"]}</td>";
                     echo " <td class='text-center text-muted'>{$elapsed}</td>";
                     echo " <td class='text-center text-muted'>{$t}</td>";
-                    echo " <td class='text-center text-muted' style='red'>{$status}</td>";
+                    echo " <td class='text-center text-muted'>{$status}</td>";
                     echo " <td class='text-center text-muted'>{$row["comment"]}</td>";
                     // echo "<br> id: " . $row["id"] . " - Name: " . $row["user_name"] . " " . $row["email"] . "<br>";
                     echo "</tr>";

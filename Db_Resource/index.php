@@ -1,7 +1,7 @@
 <?php include('sql.php');
 
 session_start();
-$sql = "select * from requests where status=0";
+$sql = "select * from requests where status=1 AND environment='UAT'";
 $result = mysqli_query($conn, $sql);
 $checkRecord = $result->fetch_array();
 $checkCount = $result->num_rows;
@@ -16,7 +16,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard - NiceAdmin Bootstrap Template</title>
+    <title>Dashboard - Resources</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -34,19 +34,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
     <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-
-
-
-    <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: NiceAdmin - v2.2.2
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
   </head>
 
   <body>
@@ -110,14 +98,14 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-          <a class="nav-link" href="index.php">
+          <a class="nav-link" id="nav-link-btn" onclick="clrChange()" href="index.php">
             <i class="bi bi-grid"></i>
             <span>UAT</span>
           </a>
         </li><!-- End UAT Nav -->
 
         <li class="nav-item">
-          <a class="nav-link " href="staging.php">
+          <a class="nav-link" id="nav-link-btn" href="staging.php">
             <i class="bi bi-grid"></i>
             <span>Staging</span>
           </a>
@@ -185,7 +173,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       <?php if ($checkCount !== 0) { ?>
         <div class="row">
           <div id="alert-info-db" value="3" class="alert alert-danger alert-dismissible fade show mt-3 alert-box-db" role="alert">
-          <MARquee>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> database is currently resourcing.....</MARquee>
+            <MARquee>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> database is currently resourcing.....</MARquee>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         </div>
@@ -259,17 +247,17 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                 <th scope="col">Time Taken</th>
                 <th scope="col">Initiated By</th>
                 <th scope="col">Status</th>
-                <th scope="col">Comment</th>
+                <th scope="col" style="width: 180px;">Comment</th>
               </tr>
             </thead>
             <tbody>
               <?php
-                $sql = "SELECT * FROM requests";
+                $sql = "SELECT * FROM requests ORDER BY id DESC";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                   // output data of each row
                   $i = 1;
-                  
+
                   while ($row = $result->fetch_assoc()) {
                     $t = ($row["requested_by"] == $_SESSION['id']) ? $_SESSION['username'] : 'no user found';
                     if ($row['status'] == 0) {
@@ -279,18 +267,18 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                     } else {
                       $status = 'Failed';
                     }
-                     $date1 = new DateTime($row["created_at"]);
-                     $date2 = new DateTime($row["completed_at"]);
-                  if($row["completed_at"]!= ''){
-                    $interval = $date1->diff($date2);
-                    $elapsed = $interval->format('%H:%I:%S');;
-                  }else{
-                    $elapsed='';
-                  }
-                    
+                    $date1 = new DateTime($row["created_at"]);
+                    $date2 = new DateTime($row["completed_at"]);
+                    if ($row["completed_at"] != '') {
+                      $interval = $date1->diff($date2);
+                      $elapsed = $interval->format('%H:%I:%S');;
+                    } else {
+                      $elapsed = '';
+                    }
 
 
-            
+
+
                     echo "<tr>";
                     echo " <td class='text-center text-muted'>{$i}</td>";
                     echo " <td class='text-center text-muted'>{$row["db"]}</td>";
@@ -300,7 +288,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                     echo " <td class='text-center text-muted'>{$elapsed}</td>";
                     echo " <td class='text-center text-muted'>{$t}</td>";
                     echo " <td class='text-center text-muted' style='red'>{$status}</td>";
-                    echo " <td class='text-center text-muted'>{$row["comment"]}</td>";
+                    echo " <td id='commentsVal' class='text-center text-muted' title='{$row["comment"]}' style='overflow:hidden!important;text-overflow: ellipsis!important; white-space:nowrap !important;display: block;width: 195px !important;'>{$row["comment"]}</td>";
                     // echo "<br> id: " . $row["id"] . " - Name: " . $row["user_name"] . " " . $row["email"] . "<br>";
                     echo "</tr>";
                     $i++;
@@ -340,6 +328,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       $(document).ready(function() {
         $('#example').DataTable();
       });
+      
+      
     </script>
 
   </body>

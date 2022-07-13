@@ -78,9 +78,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 			<?php if (isset($_GET['error'])) { ?>
 				<p class="error" role="alert"><?php echo $_GET['error']; ?></p>
 			<?php } ?>
-
-
-
 			<label>Old Password</label>
 			<input type="password" name="op" placeholder="Old Password">
 			<br>
