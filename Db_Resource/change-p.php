@@ -20,10 +20,10 @@ if (isset($_POST['np'])
 	$c_np = validate($_POST['c_np']);
     
     if(empty($np)){
-      header("Location: index.php.php?error=New Password is required");
+      header("Location: uat.php.php?error=New Password is required");
 	  exit();
     }else if($np !== $c_np){
-      header("Location: index.php?error=The confirmation password  does not match");
+      header("Location: uat.php?error=The confirmation password  does not match");
 	  exit();
     }else {
     	// hashing the password
@@ -48,7 +48,7 @@ if (isset($_POST['np'])
         	
 			if($query_run){
 				$_SESSION['success']="Your password has been changed successfully";
-				header("Location: index.php");
+				header("Location: uat.php");
 				exit();
 			}else{
 				echo "something went wrong";
@@ -57,7 +57,7 @@ if (isset($_POST['np'])
 			
 
         }else {
-        	header("Location: index.php?error=Incorrect password");
+        	header("Location: uat.php?error=Incorrect password");
 	        exit();
         }
 
@@ -66,12 +66,12 @@ if (isset($_POST['np'])
     
 }else{
 	// header("Location: index.php");
-	echo 'error';
+	echo 'Something Went Wrong';
 	exit();
 }
 
 }else{
     //  header("Location: index.php");
-	echo 'error';
+	echo 'Something Went Wrong';
      exit();
 }

@@ -13,7 +13,17 @@
   overflow-x: hidden;
 }
 #commentsVal{
-  overflow:hidden!important;text-overflow: ellipsis!important; white-space:nowrap !important;display: block;max-width:120px!important;height: 72px!important;
+  overflow:hidden!important;text-overflow: ellipsis!important; white-space:nowrap !important;max-width:80px!important;height: 72px!important;
+}
+
+.link-nav{
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.3;
+  padding: 10px 15px;
+  border-radius: 4px;
 }
 .table-striped>tbody>tr:nth-of-type(odd)>* {
   --bs-table-accent-bg: unset!important;
@@ -372,8 +382,8 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 .logo img {
-  max-height: 26px;
-  margin-right: 6px;
+  max-height: 50px;
+  margin-right: 0px;
 }
 .logo span {
   font-size: 26px;

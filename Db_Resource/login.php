@@ -49,10 +49,10 @@
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center justify-login">
 
-              <div class="d-flex justify-content-center ">
-                <a href="index.html" class="logo d-flex align-items-center w-auto mb-3">
-                  <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">Pharmapod</span>
+              <div class="">
+                <a href="index.html" class="logo d-flex flex-column align-items-center w-auto mb-3">
+                  <img src="images/logo.png"  alt="" style="max-height: 75px;"><br>
+                  <span class="d-none d-lg-block">Pharmapod DB Resourcing</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -67,7 +67,7 @@
 
                   <form class="row g-3 needs-validation" action="logincheck.php" method="post" autocomplete="on" novalidate>
                   <?php if (isset($_GET['error'])) { ?>
-     		<p class="error"><?php echo $_GET['error']; ?></p>
+     		<p  style="color:red"class="error"><?php echo $_GET['error']; ?></p>
      	<?php } ?>
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Email</label>

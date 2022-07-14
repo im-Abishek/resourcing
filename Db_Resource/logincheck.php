@@ -21,10 +21,10 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	// $email = validate($_POST['email']);
 
 	if (empty($email)) {
-		header("Location: index.php?error=User Name is required");
+		header("Location: uat.php?error=User Name is required");
 	    exit();
 	}else if(empty($pass)){
-        header("Location: index.php?error=Password is required");
+        header("Location: uat.php?error=Password is required");
 	    exit();
 	}else{
 		// hashing the password
@@ -45,7 +45,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 				// $value = 'something from somewhere';
                 // setcookie("TestCookie", $value);
 
-            	header("Location: index.php");
+            	header("Location: uat.php");
 		        exit();
             }else{
 				header("Location: login.php?error=Incorect User name or password");

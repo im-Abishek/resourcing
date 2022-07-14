@@ -40,13 +40,14 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
-
     <!-- =======================================================
   * Template Name: NiceAdmin - v2.2.2
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+
   </head>
 
   <body>
@@ -56,8 +57,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 
       <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
-          <img src="assets/img/logo.png" alt="">
-          <span class="d-none d-lg-block">Resourcing</span>
+          <img src="images/logo.png" alt="">
+          <span class="d-none d-lg-block">DB Resourcing</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </div><!-- End Logo -->
@@ -69,7 +70,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
           <li class="nav-item dropdown pe-3">
 
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-              <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+              <img src="images/profile.png" alt="Profile" class="rounded-circle">
               <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $_SESSION['username']; ?></span>
             </a><!-- End Profile Iamge Icon -->
 
@@ -81,7 +82,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                 <hr class="dropdown-divider">
               </li>
               <li>
-                <button class="dropdown-item d-flex align-items-center" id="Model_box" class="BtnResources1" data-bs-toggle="modal" data-bs-target="#passwordModal" name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap">
+                <button class="dropdown-item d-flex align-items-center" id="Model-hello" class="BtnResources1" name="us_resource" data-bs-whatever="@getbootstrap">
                   <i class="bi bi-gear"></i>
                   <span>Change Password</span>
                 </button>
@@ -110,18 +111,18 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-          <a class="nav-link" href="index.php">
+          <a class="nav-link" href="uat.php">
             <i class="bi bi-grid"></i>
             <span>UAT</span>
           </a>
         </li><!-- End UAT Nav -->
 
-        <li class="nav-item">
-          <a class="nav-link " href="staging.php">
+        <li class="nav-item" style="background-color: #ccc; border-radius:5px;">
+          <a id="link-clr" class="link-nav" href="staging.php" style="color: #000;">
             <i class="bi bi-grid"></i>
-            <span>Staging</span>
+            <span class="ml-2">Staging</span>
           </a>
-        </li><!-- End staging Nav -->
+        </li>
 
 
       </ul>
@@ -129,46 +130,34 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
     </aside>
     <main id="main" class="_main_dasboard">
       <div class="pagetitle">
-        <h1>Pharmapod Resources</h1>
+        <h1>Staging DB Resourcing</h1>
       </div>
       <div class="iconslist">
         <div class="icon-root">
           <div class="icon" type="button">
-            <img id="img1" class="image-png mr-3" src="images/db-blue.png" height="60" value="1">
-            <button type="button" name="us" value="US" id="Model_box" class="btn BtnResources1 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap"><span><b>US</b></span> Resource</button>
+            <img id="img1" class="image-png mb-1" src="images/database.png" height="60" value="1">
+            <button type="button" name="us" value="US" id="Model_box" class="btn BtnResources1 btn-primary"  name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap"><span><b>US</b></span> Resource</button>
           </div>
         </div>
         <div class="icon-root">
-          <div class="icon" type="button" <?php if ($checkCount !== 0) {
-                                              echo "onclick='changeImage1('images/disk.gif');'";
-                                            } ?>>
-            <img id="img2" class="image-png mr-3" src="images/db-blue.png" height="60" value="2">
-            <button type="button" id="Model_box" id="button" class="btn BtnResources2 btn-primary" <?php if ($checkCount !== 0) {
-                                                                                                        echo 'disabled';
-                                                                                                      } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="grls_resource" onclick="getDb('GRLS');" data-bs-whatever="@getbootstrap"><span><b>GRLS</b></span> Resource</button>
+          <div class="icon" type="button" >
+            <img id="img2" class="image-png mb-1" src="images/database.png" height="60" value="2">
+            <button type="button" id="Model_box" id="button" class="btn BtnResources2 btn-primary" name="grls_resource" onclick="getDb('GRLS');" data-bs-whatever="@getbootstrap"><span><b>GRLS</b></span> Resource</button>
 
           </div>
 
         </div>
         <div class="icon-root">
-          <div class="icon" type="button" <?php if ($checkCount !== 0) {
-                                              echo "onclick='changeImage1('images/disk.gif');'";
-                                            } ?>>
-            <img id="img3" class="image-png mr-3" src="images/db-blue.png" height="60" value="3">
-            <button type="button" id="Model_box" id="button" class="btn BtnResources3 btn-primary" <?php if ($checkCount !== 0) {
-                                                                                                        echo 'disabled';
-                                                                                                      } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="uk_resource" onclick="getDb('UK');" data-bs-whatever="@getbootstrap"><span><b>UK</b></span> Resource</button>
+          <div class="icon" type="button" >
+            <img id="img3" class="image-png mb-1" src="images/database.png" height="60" value="3">
+            <button type="button" id="Model_box" id="button" class="btn BtnResources3 btn-primary"  name="uk_resource" onclick="getDb('UK');" data-bs-whatever="@getbootstrap"><span><b>UK</b></span> Resource</button>
           </div>
 
         </div>
         <div class="icon-root">
-          <div class="icon" type="button" <?php if ($checkCount !== 0) {
-                                              echo "onclick='changeImage1('images/disk.gif');'";
-                                            } ?>>
-            <img id="img4" class="image-png mr-3" src="images/db-blue.png" height="60" value="4">
-            <button type="button" id="Model_box" id="button" class="btn BtnResources4 btn-primary" <?php if ($checkCount !== 0) {
-                                                                                                        echo 'disabled';
-                                                                                                      } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="ca_resource" onclick="getDb('CA');" data-bs-whatever="@getbootstrap"><span><b>CA</b></span> Resource</button>
+          <div class="icon" type="button">
+            <img id="img4" class="image-png mb-1" src="images/database.png" height="60" value="4">
+            <button type="button" id="Model_box" id="button" class="btn BtnResources4 btn-primary"  name="ca_resource" onclick="getDb('CA');" data-bs-whatever="@getbootstrap"><span><b>CA</b></span> Resource</button>
           </div>
 
         </div>
@@ -212,16 +201,24 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
               <div class="modal-header">
                 <input type="hidden" id="getEnv" value="Staging" name="Environment">
                 <input type="hidden" id="getDb" value="" name="Db">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <h5 class="modal-title GetResource" id="exampleModalLabel" style="font-weight:bold;"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <!-- <form action="" method="POST"> -->
-                <input type="date" name="date" class="form-control">
-                <!-- <input type="submit" name="submit" value="submit"> -->
+                <label for="message-text" class="col-form-label bold" style="font-weight:bold;">DB Backup Date</label>
+
+                <?php
+                    $date = new DateTime();
+                    $enddate=$date->modify("-3 days")->format('Y-m-d');
+                    $datetime = date("Y-m-d\TH:i:s");
+                  ?>
+                <input id="party" type="date" name="partydate" value="date" class="form-control" style="width: position: relative; width: 60.5% ;" min="2022-06-15T08:30" max="<?php
+                echo $enddate;
+                ?>T16:30  ">                <!-- <input type="submit" name="submit" value="submit"> -->
                 <!-- </form> -->
                 <div class="mb-3">
-                  <label for="message-text" class="col-form-label">comment:</label>
+                  <label for="message-text" class="col-form-label bold" style="font-weight:bold;">comments</label>
                   <textarea class="form-control" id="message-text" value="" name="comments" required></textarea>
                 </div>
               </div>
@@ -235,11 +232,11 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       </form>
 
       <form action="change-p.php" method="post">
-        <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
+                <h5 class="modal-title" id="passwordModalLabel">Change password</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 <?php if (isset($_GET['error'])) { ?>
                   <p class="error" role="alert"><?php echo $_GET['error']; ?></p>
@@ -256,7 +253,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                     <label class="change-pass-label">Confirm New Password</label>
                     <input type="password" name="c_np" class="form-control" placeholder="Confirm New Password" class="change-pass-input">
                   </a>
-                  <button class="btn btn-primary ml-4 mb-2 mt-4 " style="font-size: 14px;" type="submit">CHANGE</button>
+                  <button class="btn btn-primary ml-4 mb-2 mt-4 " style="font-size: 14px;"  type="submit">CHANGE</button>
                 </div>
               </div>
             </div>
@@ -266,21 +263,21 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
 
       <div class="card mt-2">
         <div class="card-body">
-          <h5 class="card-title">Resource Table</h5>
+          <h5 class="card-title">Resource History</h5>
 
           <!-- Table with hoverable rows -->
           <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
               <tr>
-                <th scope="col">Id</th>
-                <th scope="col">DB</th>
-                <th scope="col">Environment</th>
-                <th scope="col">Initiated Date</th>
-                <th scope="col">Completed Date</th>
-                <th scope="col">Time Taken</th>
-                <th scope="col">Initiated By</th>
-                <th scope="col">Status</th>
-                <th scope="col" style="width: 50px;">Comment</th>
+                <th style="font-weight: 600;" scope="col">Id</th>
+                <th style="font-weight: 600;"  scope="col">DB</th>
+                <th style="font-weight: 600;"  scope="col">Environment</th>
+                <th style="font-weight: 600;"  scope="col">Initiated Date</th>
+                <th style="font-weight: 600;"  scope="col">Completed Date</th>
+                <th style="font-weight: 600;"  scope="col">Time Taken</th>
+                <th style="font-weight: 600;"  scope="col">Initiated By</th>
+                <th style="font-weight: 600;"  scope="col">Status</th>
+                <th style="font-weight: 600;"  scope="col">Comment</th>
               </tr>
             </thead>
             <tbody>
@@ -316,7 +313,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                     }
                     $ChangeEnvironment=$row["environment"];
                     if ($row["environment"] == 'Staging') {
-                      $tableColor = ($row["status"] == 2) ? '<tr style="background:lightblue">' : '<tr style="background:unset">';
+                      // $tableColor = ($row["status"] == 2) ? '<tr style="background:lightblue"></tr>' : '<tr style="background:unset"></tr>';
                       $newDate = date("M d, Y h:m:s", strtotime($row["completed_at"]));
                       echo "<tr>{$tableColor}";
                       echo " <td class='text-center text-muted'>{$i}</td>";
@@ -331,8 +328,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                       echo "</tr>";
                       $i++;
                     } else {
-                      echo "<tr style='display;none'>";
-                      echo "</tr>";
+                      // echo "<tr style='display;none'>";
+                      // echo "</tr>";
                     }
                   }
                 } else {
@@ -359,7 +356,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
 
@@ -368,8 +366,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
     <script>
       function getDb(name) {
         $('#getDb').val(name);
+        $('.GetResource').text(' Staging '+name+' DB Resourcing');
         var simple = '<?php echo $checkCount; ?>';
-        console.log(simple, 'hi');
+      
         if (simple == 1) {
           Swal.fire({
             // title: "<i>Title</i>", 
@@ -380,52 +379,19 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
           $("#exampleModal").modal('show');
         }
       }
+
+
       $(document).ready(function() {
         $('#example').DataTable();
       });
-      $(function() {
-        $('.date-picker').datepicker({
-          format: 'mm-dd-yyyy',
-          startDate: '06-15-2022',
-          endDate: '-3d',
-          autoclose: true
+      $(document).ready(function() {
+        $('#Model-hello').click(function(){
+            $('#passwordModal').modal('show');
         });
       });
 
-      let myVar = setInterval(myTimer, 1000);
 
-      // function myTimer() {
-      //   const d = new Date();
-      //   document.getElementById("demo").innerHTML = $elapsed;
-      // }
 
-      var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
-
-      // Update the count down every 1 second
-      var x = setInterval(function() {
-
-        // Get today's date and time
-        var now = new Date().getTime();
-
-        // Find the distance between now and the count down date
-        var distance = countDownDate + now;
-
-        // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Output the result in an element with id="demo"
-        document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
-          minutes + "m " + seconds + "s ";
-
-        // If the count down is over, write some text 
-        if (distance < 0) {
-          clearInterval(x);
-          document.getElementById("demo").innerHTML = "EXPIRED";
-        }
-      }, 1000);
     </script>
 
   </body>
