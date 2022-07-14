@@ -12,6 +12,12 @@
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
+#commentsVal{
+  overflow:hidden!important;text-overflow: ellipsis!important; white-space:nowrap !important;display: block;width: 195px !important;height: 72px!important;
+}
+.swal2-styled.swal2-confirm{
+  background-color: #007bff!important;
+}
 .small-box {
   display: flex;
   flex-direction: column;

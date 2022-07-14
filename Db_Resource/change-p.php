@@ -1,11 +1,12 @@
 <?php 
 session_start();
 
-if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
+include "sql.php";
 
-    include "sql.php";
+if (isset($_SESSION['id']) && isset($_SESSION['username'])  && isset($_SESSION['password'])) {
 
-if (isset($_POST['op']) && isset($_POST['np'])
+
+if (isset($_POST['np'])
     && isset($_POST['c_np'])) {
 
 	function validate($data){
@@ -14,15 +15,15 @@ if (isset($_POST['op']) && isset($_POST['np'])
 	   $data = htmlspecialchars($data);
 	   return $data;
 	}
-
+    // $op = validate($_POST['op']);
 	$np = validate($_POST['np']);
 	$c_np = validate($_POST['c_np']);
     
     if(empty($np)){
-      header("Location: change-password.php?error=New Password is required");
+      header("Location: index.php.php?error=New Password is required");
 	  exit();
     }else if($np !== $c_np){
-      header("Location: change-password.php?error=The confirmation password  does not match");
+      header("Location: index.php?error=The confirmation password  does not match");
 	  exit();
     }else {
     	// hashing the password
@@ -30,13 +31,14 @@ if (isset($_POST['op']) && isset($_POST['np'])
     	// $np = ($np);
         $id = $_SESSION['id'];
 		$op=$_SESSION['password'];
+		// echo '<pre>';
+		//  print_r($op);
+		//  die;
 
         $sql = "SELECT * FROM users WHERE id='$id' AND password='$op'";
 		// var_dump($sql);
         $result = mysqli_query($conn, $sql);
-		// echo '<pre>';
-		// print_r($op);
-		// die;
+		 
         if(mysqli_num_rows($result) === 1){
         	
         	$sql_2 = "UPDATE users

@@ -1,11 +1,14 @@
 <?php include('sql.php');
 
 session_start();
-$sql = "select * from requests where status=1 AND environment='UAT'";
+$sql = "select * from requests where status=2 AND environment='UAT'";
+// $status_query = "select status from requests where status=2 AND environment='UAT'";
 $result = mysqli_query($conn, $sql);
 $checkRecord = $result->fetch_array();
 $checkCount = $result->num_rows;
-
+//  echo '<pre>';
+//  print_r($checkCount);
+//  die;
 if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['password']) ) {
 
   ?>
@@ -44,9 +47,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
   ======================================================== -->
 <style>
 
-  #change-pass-box{
-    display: none
-  }
+  
+  
 </style>  
 </head>
 
@@ -81,53 +83,21 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
               <li>
                 <hr class="dropdown-divider">
               </li>
-      
-              <li >
-                <a class="dropdown-item d-flex align-items-center"  id="change-pass" onclick="getPass();">
+              <li>
+                <button class="dropdown-item d-flex align-items-center" id="Model_box" class="BtnResources1" data-bs-toggle="modal" data-bs-target="#passwordModal" name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap" >
                   <i class="bi bi-gear"></i>
                   <span>Change Password</span>
-                  
-                </a>
+</button>
               </li>
               <li>
                 <hr class="dropdown-divider">
               </li>
-              
-           
-              <li  
-              class="" id="change-pass-box">
-              <form action="change-p.php" method="post" autocomplete="off">
-                 <?php if (isset($_GET['error'])) { ?>
-			           	<p class="error" role="alert"><?php echo $_GET['error']; ?></p>
-			           <?php } ?>
-                <a class="dropdown-item d-flex flex-column align-items-left">
-                  <label class="change-pass-label">New Password</label>
-			            <input type="password" name="np" placeholder="New Password" class="change-pass-input">
-                </a>
-                
-			            <input type="hidden" name="op" placeholder="Old Password">
-
-                <a class="dropdown-item d-flex flex-column align-items-left">
-                  <label class="change-pass-label">Confirm New Password</label>
-			            <input type="password" name="c_np" placeholder="Confirm New Password" class="change-pass-input">
-                </a>
-                <button class="btn btn-primary ml-3 mb-3" style="font-size: 14px;" type="submit">CHANGE</button>
-              </li>
-              <li id="change-pass-box">
-                <hr class="dropdown-divider">
-                </form>
-              </li>
-          
-              
-            
               <li>
                 <a class="dropdown-item d-flex align-items-center" href="logout.php">
                   <i class="bi bi-box-arrow-right"></i>
                   <span>Sign Out</span>
                 </a>
               </li>
- 
-
 
             </ul><!-- End Profile Dropdown Items -->
           </li><!-- End Profile Nav -->
@@ -137,20 +107,20 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
 
     </header><!-- End Header -->
 
+
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
-
-      <ul class="sidebar-nav" id="sidebar-nav nav-side-clr">
+      <ul class="sidebar-nav" id="sidebar-nav ">
 
         <li class="nav-item">
-          <a class="nav-link" onclick="clrChange();" href="index.php">
+          <a class="nav-link"  href="index.php">
             <i class="bi bi-grid"></i>
             <span>UAT</span>
           </a>
         </li><!-- End UAT Nav -->
 
         <li class="nav-item">
-          <a class="nav-link" id="nav-link-btn" href="staging.php">
+          <a class="nav-link" href="staging.php">
             <i class="bi bi-grid"></i>
             <span>Staging</span>
           </a>
@@ -165,6 +135,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
         <h1>Pharmapod Resources</h1>
       </div>
       <div class="iconslist">
+        <input type="hidden" onclick="AllowBtn();">
         <div class="icon-root">
           <div class="icon" type="button" <?php if ($checkCount !== 0) {
                                               echo "onclick='changeImage1('images/disk.gif');'";
@@ -172,10 +143,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
                                             } ?>>
             <img id="img1" class="image-png" src="images/disk.png" height="60" value="1">
 
-            <button type="button" name="us" value="US" id="Model_box" <?php if ($checkCount !== 0) {
-                                                                          echo 'disabled';
-                                                                          // echo 'style="background-color:white"';
-                                                                        } ?> class="btn BtnResources1 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap"><span><b>US</b></span> Resource</button>
+            <button type="button" name="us" value="US" id="Model_box" class="btn BtnResources1 btn-primary"  name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap"><span><b>US</b></span> Resource</button>
             <!-- <div class="_label_resourcing">US Resource</div> -->
           </div>
         </div>
@@ -184,9 +152,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
                                               echo "onclick='changeImage1('images/disk.gif');'";
                                             } ?>>
             <img id="img2" class="image-png" src="images/disk.png" height="60" value="2">
-            <button type="button" id="Model_box" id="button" class="btn BtnResources2 btn-primary" <?php if ($checkCount !== 0) {
-                                                                                                        echo 'disabled';
-                                                                                                      } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="grls_resource" onclick="getDb('GRLS');" data-bs-whatever="@getbootstrap"><span><b>GRLS</b></span> Resource</button>
+            <button type="button" id="Model_box" id="button" class="btn BtnResources2 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" name="grls_resource" onclick="getDb('GRLS');" data-bs-whatever="@getbootstrap"><span><b>GRLS</b></span> Resource</button>
 
           </div>
 
@@ -196,9 +162,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
                                               echo "onclick='changeImage1('images/disk.gif');'";
                                             } ?>>
             <img id="img3" class="image-png" src="images/disk.png" height="60" value="3">
-            <button type="button" id="Model_box" id="button" class="btn BtnResources3 btn-primary" <?php if ($checkCount !== 0) {
-                                                                                                        echo 'disabled';
-                                                                                                      } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="uk_resource" onclick="getDb('UK');" data-bs-whatever="@getbootstrap"><span><b>UK</b></span> Resource</button>
+            <button type="button" id="Model_box" id="button" class="btn BtnResources3 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" name="uk_resource" onclick="getDb('UK');" data-bs-whatever="@getbootstrap"><span><b>UK</b></span> Resource</button>
           </div>
 
         </div>
@@ -207,9 +171,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
                                               echo "onclick='changeImage1('images/disk.gif');'";
                                             } ?>>
             <img id="img4" class="image-png" src="images/disk.png" height="60" value="4">
-            <button type="button" id="Model_box" id="button" class="btn BtnResources4 btn-primary" <?php if ($checkCount !== 0) {
-                                                                                                        echo 'disabled';
-                                                                                                      } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="ca_resource" onclick="getDb('CA');" data-bs-whatever="@getbootstrap"><span><b>CA</b></span> Resource</button>
+            <button type="button" id="Model_box" id="button" class="btn BtnResources4 btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal" name="ca_resource" onclick="getDb('CA');" data-bs-whatever="@getbootstrap"><span><b>CA</b></span> Resource</button>
           </div>
 
         </div>
@@ -218,7 +180,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
       <?php if ($checkCount !== 0) { ?>
         <div class="row">
           <div id="alert-info-db" value="3" class="alert alert-danger alert-dismissible fade show mt-3 alert-box-db" role="alert">
-          <MARquee>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> database is currently resourcing.....</MARquee>
+          <MARquee style="font-size:bold;font-size: 20px;">The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> Database is currently resourcing...You can resource the <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> after the current resourcing is Completed </MARquee>
           </div>
         </div>
       <?php } ?>
@@ -258,7 +220,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
               </div>
               <div class="modal-body">
                 <!-- <form action="" method="POST"> -->
-                <input type="datetime-local" class="form-control" name="date" style="width: position: relative; width: 60.5% ;">
+                <input type="date" name="date" class="form-control" >
                 <!-- <input type="submit" name="submit" value="submit"> -->
                 <!-- </form> -->
                 <div class="mb-3">
@@ -269,6 +231,41 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
               <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
                 <input type="submit" value="submit" class="btn btn-primary closeMsg">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <form action="change-p.php" method="post">
+        <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                
+              </div>
+                 <div class="modal-body">
+                 <?php if (isset($_GET['error'])) { ?>
+			           	<p class="error" role="alert"><?php echo $_GET['error']; ?></p>
+			           <?php } ?>
+                <a class="dropdown-item d-flex flex-column align-items-left">
+                  <label class="change-pass-label">New Password</label>
+			            <input type="password" name="np" class="form-control mb-3" placeholder="New Password" class="change-pass-input">
+                </a>
+			            <input type="hidden" name="op" placeholder="Old Password">
+                  <div class="mb-3">
+                <a class="dropdown-item d-flex flex-column align-items-left">
+                  <label class="change-pass-label">Confirm New Password</label>
+			            <input type="password" name="c_np" class="form-control" placeholder="Confirm New Password" class="change-pass-input">
+                </a>
+              
+                <button class="btn btn-primary ml-4 mb-2 mt-4 " style="font-size: 14px;" type="submit">CHANGE</button>
+                
+                  
+                 </div>
+                
               </div>
             </div>
           </div>
@@ -305,12 +302,17 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
                   while ($row = $result->fetch_assoc()) {
                     $t = ($row["requested_by"] == $_SESSION['id']) ? $_SESSION['username'] : 'no user found';
                     if ($row['status'] == 0) {
-                      $status = 'In progress';
-                    } elseif ($row['status'] == 1) {
-                      $status =  'Completed';
-                    } else {
-                      $status = 'Failed';
+                      $status = '<P style="color:Orange">Submitted</P>';
+                    } elseif ($row['status'] == 2) {
+                      $status =  '<P style="color:Blue">In Progress</P>';
+                    } 
+                    elseif ($row['status'] == 3) {
+                      $status =  '<P style="color:green">Success</P>';
+                    }else{
+                      $status = '<P style="color:red">Failed</P>';
                     }
+                   
+
                     $date1 = new DateTime($row["created_at"]);
                     $date2 = new DateTime($row["completed_at"]);
                     if ($row["completed_at"] != '') {
@@ -332,7 +334,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
                     echo " <td class='text-center text-muted'>{$elapsed}</td>";
                     echo " <td class='text-center text-muted'>{$t}</td>";
                     echo " <td class='text-center text-muted' style='red'>{$status}</td>";
-                    echo " <td id='commentsVal' class='text-center text-muted' title='{$row["comment"]}' style='overflow:hidden!important;text-overflow: ellipsis!important; white-space:nowrap !important;display: block;width: 195px !important;'>{$row["comment"]}</td>";
+                    echo " <td id='commentsVal' class='text-center text-muted' title='{$row["comment"]}'>{$row["comment"]}</td>";
                     // echo "<br> id: " . $row["id"] . " - Name: " . $row["user_name"] . " " . $row["email"] . "<br>";
                     echo "</tr>";
                     $i++;
@@ -361,6 +363,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <!-- Template Main JS File -->
@@ -368,6 +372,18 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
     <script>
       function getDb(name) {
         $('#getDb').val(name);
+        var simple = '<?php echo $checkCount; ?>';  
+         console.log(simple,'hi');      
+         if(simple == 1){
+           Swal.fire({
+            // title: "<i>Title</i>", 
+                 html: "<h4 style='color:red;margin-top:1rem'>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> Database is currently resourcing. You can resource the <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> after the current resourcing is Completed</h4>",  
+                confirmButtonText: "<h4 style='margin:0px !important;background:#007bff !important'>Okay</h4>", });
+         }
+         else{
+         $("#exampleModal").modal('show');
+         }
+        
       }
      
       $(document).ready(function() {
@@ -383,9 +399,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
       $(document).ready(function() {
        getPass();
       });
-      function clrChange() {
-          document.getElementById('nav-side-clr').style.cssText = 'background-color: red; color: white; 
-      }
+  
     </script>
 
   </body>

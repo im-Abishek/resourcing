@@ -1,7 +1,7 @@
 <?php include('sql.php');
 
 session_start();
-$sql = "select * from requests where status=0 AND environment='Staging'";
+$sql = "select * from requests where status=2 AND environment='Staging'";
 $result = mysqli_query($conn, $sql);
 $checkRecord = $result->fetch_array(); 
 $checkCount = $result->num_rows;
@@ -81,10 +81,10 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                 <hr class="dropdown-divider">
               </li>
               <li>
-                <a class="dropdown-item d-flex align-items-center" href="change-password.php">
+                <button class="dropdown-item d-flex align-items-center" id="Model_box" class="BtnResources1" data-bs-toggle="modal" data-bs-target="#passwordModal" name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap" >
                   <i class="bi bi-gear"></i>
                   <span>Change Password</span>
-                </a>
+</button>
               </li>
               <li>
                 <hr class="dropdown-divider">
@@ -138,9 +138,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                                             } ?>>
             <img id="img1" class="image-png" src="images/disk.png" height="60" value="1">
 
-            <button type="button" name="us" value="US" id="Model_box" <?php if ($checkCount !== 0) {
-                                                                          echo 'disabled';
-                                                                        } ?> class="btn BtnResources1 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap"><span><b>US</b></span> Resource</button>
+            <button type="button" name="us" value="US" id="Model_box" class="btn BtnResources1 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap"><span><b>US</b></span> Resource</button>
             <!-- <div class="_label_resourcing">US Resource</div> -->
           </div>
         </div>
@@ -223,7 +221,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
               </div>
               <div class="modal-body">
                 <!-- <form action="" method="POST"> -->
-                <input type="date" name="date" style="width: position: relative; width: 60.5% ;">
+                <input type="date" name="date" class="form-control" >
                 <!-- <input type="submit" name="submit" value="submit"> -->
                 <!-- </form> -->
                 <div class="mb-3">
@@ -234,6 +232,40 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
               <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
                 <input type="submit" value="submit" class="btn btn-primary closeMsg">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <form action="change-p.php" method="post">
+        <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 <?php if (isset($_GET['error'])) { ?>
+			           	<p class="error" role="alert"><?php echo $_GET['error']; ?></p>
+			           <?php } ?>
+              </div>
+                 <div class="modal-body">
+                <a class="dropdown-item d-flex flex-column align-items-left">
+                  <label class="change-pass-label">New Password</label>
+			            <input type="password" name="np" class="form-control mb-3"placeholder="New Password" class="change-pass-input">
+                </a>
+			            <input type="hidden" name="op" placeholder="Old Password">
+                  <div class="mb-3">
+                <a class="dropdown-item d-flex flex-column align-items-left">
+                  <label class="change-pass-label">Confirm New Password</label>
+			            <input type="password" name="c_np" class="form-control" placeholder="Confirm New Password" class="change-pass-input">
+                </a>
+              
+                <button class="btn btn-primary ml-4 mb-2 mt-4 " style="font-size: 14px;" type="submit">CHANGE</button>
+                
+                  
+                 </div>
+                
               </div>
             </div>
           </div>
@@ -270,12 +302,20 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                   while ($row = $result->fetch_assoc()) {
                     $t = ($row["requested_by"] == $_SESSION['id']) ? $_SESSION['username'] : 'no user found';
                     if ($row['status'] == 0) {
-                      $status = '<P style="color:red">In progress</P>';
-                    } elseif ($row['status'] == 1) {
-                      $status =  '<P style="color:Green">Completed</P>';
-                    } else {
-                      $status = 'Failed';
+                      $status = '<P style="color:Orange">Submitted</P>';
+                    } elseif ($row['status'] == 2) {
+                      $status =  '<P style="color:Blue">In Progress</P>';
+                    } 
+                    elseif ($row['status'] == 3) {
+                      $status =  '<P style="color:green">Success</P>';
+                    }elseif ($row['status'] == -1) {
+                      $status = '<P style="color:red">Failed</P>';
                     }
+                    else {
+                      $status = '<P style="color:red">Start</P>';
+                    }
+
+
                      $date1 = new DateTime($row["created_at"]);
                      $date2 = new DateTime($row["completed_at"]);
                   if($row["completed_at"]!= ''){
@@ -297,7 +337,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                     echo " <td class='text-center text-muted'>{$elapsed}</td>";
                     echo " <td class='text-center text-muted'>{$t}</td>";
                     echo " <td class='text-center text-muted'>{$status}</td>";
-                    echo " <td class='text-center text-muted'>{$row["comment"]}</td>";
+                    echo " <td class='text-center text-muted' id='commentsVal' title='{$row["comment"]}'>{$row["comment"]}</td>";
                     // echo "<br> id: " . $row["id"] . " - Name: " . $row["user_name"] . " " . $row["email"] . "<br>";
                     echo "</tr>";
                     $i++;
@@ -326,6 +366,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
     <!-- Template Main JS File -->
@@ -333,10 +375,28 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
     <script>
       function getDb(name) {
         $('#getDb').val(name);
+        var simple = '<?php echo $checkCount; ?>';  
+         console.log(simple,'hi');      
+         if(simple == 1){
+           Swal.fire({
+            // title: "<i>Title</i>", 
+                 html: "<h4 style='color:red;margin-top:1rem'>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> Database is currently resourcing. You can resource the <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> after the current resourcing is Completed</h4>",  
+                confirmButtonText: "<h4 style='margin:0px !important;background:#007bff !important'>Okay</h4>", });
+         }
+         else{
+         $("#exampleModal").modal('show');
+         }
       }
       $(document).ready(function() {
         $('#example').DataTable();
       });
+
+      let myVar = setInterval(myTimer ,1000);
+      function myTimer() {
+      const d = new Date();
+      document.getElementById("demo").innerHTML =$elapsed;
+      }
+     
     </script>
 
   </body>
