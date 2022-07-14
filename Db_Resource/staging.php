@@ -3,7 +3,7 @@
 session_start();
 $sql = "select * from requests where status=2 AND environment='Staging'";
 $result = mysqli_query($conn, $sql);
-$checkRecord = $result->fetch_array(); 
+$checkRecord = $result->fetch_array();
 $checkCount = $result->num_rows;
 
 if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
@@ -81,10 +81,10 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                 <hr class="dropdown-divider">
               </li>
               <li>
-                <button class="dropdown-item d-flex align-items-center" id="Model_box" class="BtnResources1" data-bs-toggle="modal" data-bs-target="#passwordModal" name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap" >
+                <button class="dropdown-item d-flex align-items-center" id="Model_box" class="BtnResources1" data-bs-toggle="modal" data-bs-target="#passwordModal" name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap">
                   <i class="bi bi-gear"></i>
                   <span>Change Password</span>
-</button>
+                </button>
               </li>
               <li>
                 <hr class="dropdown-divider">
@@ -133,20 +133,16 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       </div>
       <div class="iconslist">
         <div class="icon-root">
-          <div class="icon" type="button" <?php if ($checkCount !== 0) {
-                                              echo "onclick='changeImage1('images/disk.gif');'";
-                                            } ?>>
-            <img id="img1" class="image-png" src="images/disk.png" height="60" value="1">
-
+          <div class="icon" type="button">
+            <img id="img1" class="image-png mr-3" src="images/db-blue.png" height="60" value="1">
             <button type="button" name="us" value="US" id="Model_box" class="btn BtnResources1 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" name="us_resource" onclick="getDb('US');" data-bs-whatever="@getbootstrap"><span><b>US</b></span> Resource</button>
-            <!-- <div class="_label_resourcing">US Resource</div> -->
           </div>
         </div>
         <div class="icon-root">
           <div class="icon" type="button" <?php if ($checkCount !== 0) {
                                               echo "onclick='changeImage1('images/disk.gif');'";
                                             } ?>>
-            <img id="img2" class="image-png" src="images/disk.png" height="60" value="2">
+            <img id="img2" class="image-png mr-3" src="images/db-blue.png" height="60" value="2">
             <button type="button" id="Model_box" id="button" class="btn BtnResources2 btn-primary" <?php if ($checkCount !== 0) {
                                                                                                         echo 'disabled';
                                                                                                       } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="grls_resource" onclick="getDb('GRLS');" data-bs-whatever="@getbootstrap"><span><b>GRLS</b></span> Resource</button>
@@ -158,7 +154,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
           <div class="icon" type="button" <?php if ($checkCount !== 0) {
                                               echo "onclick='changeImage1('images/disk.gif');'";
                                             } ?>>
-            <img id="img3" class="image-png" src="images/disk.png" height="60" value="3">
+            <img id="img3" class="image-png mr-3" src="images/db-blue.png" height="60" value="3">
             <button type="button" id="Model_box" id="button" class="btn BtnResources3 btn-primary" <?php if ($checkCount !== 0) {
                                                                                                         echo 'disabled';
                                                                                                       } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="uk_resource" onclick="getDb('UK');" data-bs-whatever="@getbootstrap"><span><b>UK</b></span> Resource</button>
@@ -169,7 +165,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
           <div class="icon" type="button" <?php if ($checkCount !== 0) {
                                               echo "onclick='changeImage1('images/disk.gif');'";
                                             } ?>>
-            <img id="img4" class="image-png" src="images/disk.png" height="60" value="4">
+            <img id="img4" class="image-png mr-3" src="images/db-blue.png" height="60" value="4">
             <button type="button" id="Model_box" id="button" class="btn BtnResources4 btn-primary" <?php if ($checkCount !== 0) {
                                                                                                         echo 'disabled';
                                                                                                       } ?> data-bs-toggle="modal" data-bs-target="#exampleModal" name="ca_resource" onclick="getDb('CA');" data-bs-whatever="@getbootstrap"><span><b>CA</b></span> Resource</button>
@@ -180,8 +176,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       </div>
       <?php if ($checkCount !== 0) { ?>
         <div class="row">
-        <div id="alert-info-db" value="3" class="alert alert-danger alert-dismissible fade show mt-3 alert-box-db" role="alert">
-        <MARquee>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> database is currently resourcing.....</MARquee>
+          <div id="alert-info-db" value="3" class="alert alert-danger alert-dismissible fade show mt-3 alert-box-db" role="alert">
+            <MARquee>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> database is currently resourcing.....</MARquee>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
         </div>
@@ -221,7 +217,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
               </div>
               <div class="modal-body">
                 <!-- <form action="" method="POST"> -->
-                <input type="date" name="date" class="form-control" >
+                <input type="date" name="date" class="form-control">
                 <!-- <input type="submit" name="submit" value="submit"> -->
                 <!-- </form> -->
                 <div class="mb-3">
@@ -243,29 +239,25 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                 <?php if (isset($_GET['error'])) { ?>
-			           	<p class="error" role="alert"><?php echo $_GET['error']; ?></p>
-			           <?php } ?>
+                <?php if (isset($_GET['error'])) { ?>
+                  <p class="error" role="alert"><?php echo $_GET['error']; ?></p>
+                <?php } ?>
               </div>
-                 <div class="modal-body">
+              <div class="modal-body">
                 <a class="dropdown-item d-flex flex-column align-items-left">
                   <label class="change-pass-label">New Password</label>
-			            <input type="password" name="np" class="form-control mb-3"placeholder="New Password" class="change-pass-input">
+                  <input type="password" name="np" class="form-control mb-3" placeholder="New Password" class="change-pass-input">
                 </a>
-			            <input type="hidden" name="op" placeholder="Old Password">
-                  <div class="mb-3">
-                <a class="dropdown-item d-flex flex-column align-items-left">
-                  <label class="change-pass-label">Confirm New Password</label>
-			            <input type="password" name="c_np" class="form-control" placeholder="Confirm New Password" class="change-pass-input">
-                </a>
-              
-                <button class="btn btn-primary ml-4 mb-2 mt-4 " style="font-size: 14px;" type="submit">CHANGE</button>
-                
-                  
-                 </div>
-                
+                <input type="hidden" name="op" placeholder="Old Password">
+                <div class="mb-3">
+                  <a class="dropdown-item d-flex flex-column align-items-left">
+                    <label class="change-pass-label">Confirm New Password</label>
+                    <input type="password" name="c_np" class="form-control" placeholder="Confirm New Password" class="change-pass-input">
+                  </a>
+                  <button class="btn btn-primary ml-4 mb-2 mt-4 " style="font-size: 14px;" type="submit">CHANGE</button>
+                </div>
               </div>
             </div>
           </div>
@@ -288,59 +280,60 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                 <th scope="col">Time Taken</th>
                 <th scope="col">Initiated By</th>
                 <th scope="col">Status</th>
-                <th scope="col">Comment</th>
+                <th scope="col" style="width: 50px;">Comment</th>
               </tr>
             </thead>
             <tbody>
               <?php
-               $sql = "SELECT * FROM requests ORDER BY id DESC";
+                $sql = "SELECT * FROM requests ORDER BY id ASC";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                   // output data of each row
                   $i = 1;
-                  
+
                   while ($row = $result->fetch_assoc()) {
-                    $t = ($row["requested_by"] == $_SESSION['id']) ? $_SESSION['username'] : 'no user found';
+                    $UserName = ($row["requested_by"] == $_SESSION['id']) ? $_SESSION['username'] : 'no user found';
                     if ($row['status'] == 0) {
                       $status = '<P style="color:Orange">Submitted</P>';
                     } elseif ($row['status'] == 2) {
                       $status =  '<P style="color:Blue">In Progress</P>';
-                    } 
-                    elseif ($row['status'] == 3) {
+                    } elseif ($row['status'] == 3) {
                       $status =  '<P style="color:green">Success</P>';
-                    }elseif ($row['status'] == -1) {
+                    } elseif ($row['status'] == -1) {
                       $status = '<P style="color:red">Failed</P>';
-                    }
-                    else {
+                    } else {
                       $status = '<P style="color:red">Start</P>';
                     }
 
 
-                     $date1 = new DateTime($row["created_at"]);
-                     $date2 = new DateTime($row["completed_at"]);
-                  if($row["completed_at"]!= ''){
-                    $interval = $date1->diff($date2);
-                    $elapsed = $interval->format('%H:%I:%S');;
-                  }else{
-                    $elapsed='';
-                  }
-                    
-
-
-            
-                    echo "<tr>";
-                    echo " <td class='text-center text-muted'>{$i}</td>";
-                    echo " <td class='text-center text-muted'>{$row["db"]}</td>";
-                    echo " <td class='text-center text-muted'>{$row["environment"]}</td>";
-                    echo " <td class='text-center text-muted'>{$row["created_at"]}</td>";
-                    echo " <td class='text-center text-muted'>{$row["completed_at"]}</td>";
-                    echo " <td class='text-center text-muted'>{$elapsed}</td>";
-                    echo " <td class='text-center text-muted'>{$t}</td>";
-                    echo " <td class='text-center text-muted'>{$status}</td>";
-                    echo " <td class='text-center text-muted' id='commentsVal' title='{$row["comment"]}'>{$row["comment"]}</td>";
-                    // echo "<br> id: " . $row["id"] . " - Name: " . $row["user_name"] . " " . $row["email"] . "<br>";
-                    echo "</tr>";
-                    $i++;
+                    $date1 = new DateTime($row["created_at"]);
+                    $date2 = new DateTime($row["completed_at"]);
+                    if ($row["completed_at"] != '') {
+                      $interval = $date1->diff($date2);
+                      $elapsed = $interval->format('%H:%I:%S');;
+                    } else {
+                      $elapsed = '';
+                    }
+                    $ChangeEnvironment=$row["environment"];
+                    if ($row["environment"] == 'Staging') {
+                      $tableColor = ($row["status"] == 2) ? '<tr style="background:lightblue">' : '<tr style="background:unset">';
+                      $newDate = date("M d, Y h:m:s", strtotime($row["completed_at"]));
+                      echo "<tr>{$tableColor}";
+                      echo " <td class='text-center text-muted'>{$i}</td>";
+                      echo " <td class='text-center text-muted'>{$row["db"]}</td>";
+                      echo " <td class='text-center text-muted'>{$ChangeEnvironment}</td>";
+                      echo " <td class='text-center text-muted'>{$row["created_at"]}</td>";
+                      echo " <td class='text-center text-muted'>{$row["completed_at"]}</td>";
+                      echo " <td class='text-center text-muted'>{$elapsed}</td>";
+                      echo " <td class='text-center text-muted'>{$UserName}</td>";
+                      echo " <td class='text-center text-muted' style='red'>{$status}</td>";
+                      echo " <td id='commentsVal' class='text-center text-muted' title='{$row["comment"]}'>{$row["comment"]}</td>";
+                      echo "</tr>";
+                      $i++;
+                    } else {
+                      echo "<tr style='display;none'>";
+                      echo "</tr>";
+                    }
                   }
                 } else {
                   echo "<h2 class='text-center'>NO results</h2>";
@@ -375,28 +368,64 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
     <script>
       function getDb(name) {
         $('#getDb').val(name);
-        var simple = '<?php echo $checkCount; ?>';  
-         console.log(simple,'hi');      
-         if(simple == 1){
-           Swal.fire({
+        var simple = '<?php echo $checkCount; ?>';
+        console.log(simple, 'hi');
+        if (simple == 1) {
+          Swal.fire({
             // title: "<i>Title</i>", 
-                 html: "<h4 style='color:red;margin-top:1rem'>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> Database is currently resourcing. You can resource the <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> after the current resourcing is Completed</h4>",  
-                confirmButtonText: "<h4 style='margin:0px !important;background:#007bff !important'>Okay</h4>", });
-         }
-         else{
-         $("#exampleModal").modal('show');
-         }
+            html: "<h4 style='color:red;margin-top:1rem'>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> Database is currently resourcing. You can resource the <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> after the current resourcing is Completed</h4>",
+            confirmButtonText: "<h4 style='margin:0px !important;background:#007bff !important'>Okay</h4>",
+          });
+        } else {
+          $("#exampleModal").modal('show');
+        }
       }
       $(document).ready(function() {
         $('#example').DataTable();
       });
+      $(function() {
+        $('.date-picker').datepicker({
+          format: 'mm-dd-yyyy',
+          startDate: '06-15-2022',
+          endDate: '-3d',
+          autoclose: true
+        });
+      });
 
-      let myVar = setInterval(myTimer ,1000);
-      function myTimer() {
-      const d = new Date();
-      document.getElementById("demo").innerHTML =$elapsed;
-      }
-     
+      let myVar = setInterval(myTimer, 1000);
+
+      // function myTimer() {
+      //   const d = new Date();
+      //   document.getElementById("demo").innerHTML = $elapsed;
+      // }
+
+      var countDownDate = new Date("Jan 5, 2024 15:37:25").getTime();
+
+      // Update the count down every 1 second
+      var x = setInterval(function() {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate + now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
+          minutes + "m " + seconds + "s ";
+
+        // If the count down is over, write some text 
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+      }, 1000);
     </script>
 
   </body>
