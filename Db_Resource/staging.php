@@ -83,7 +83,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
               </li>
               <li>
                 <button class="dropdown-item d-flex align-items-center" id="Model-hello" class="BtnResources1" name="us_resource" data-bs-whatever="@getbootstrap">
-                  <i class="bi bi-gear"></i>
+                  <i class="bi bi-lock"></i>
                   <span>Change Password</span>
                 </button>
               </li>
@@ -206,7 +206,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
               </div>
               <div class="modal-body">
                 <!-- <form action="" method="POST"> -->
-                <label for="message-text" class="col-form-label bold" style="font-weight:bold;">DB Backup Date</label>
+                <label for="message-text" class="col-form-label required" style="font-weight:bold;">DB Backup Date</label>
 
                 <?php
                     $date = new DateTime();
@@ -218,7 +218,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                 ?>T16:30  ">                <!-- <input type="submit" name="submit" value="submit"> -->
                 <!-- </form> -->
                 <div class="mb-3">
-                  <label for="message-text" class="col-form-label bold" style="font-weight:bold;">comments</label>
+                  <label for="message-text" class="col-form-label required" style="font-weight:bold;">Comments</label>
                   <textarea class="form-control" id="message-text" value="" name="comments" required></textarea>
                 </div>
               </div>
@@ -231,29 +231,28 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
         </div>
       </form>
 
-      <form action="change-p.php" method="post">
-        <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+      <form action="change-p.php" method="post" autocomplete="off">
+        <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="passwordModalLabel">Change password</h5>
+              <h5 class="modal-title" id="passwordModalLabel"  style="width: auto;margin: 0px 30px 0px 131px;font-weight: 900;font-size: 24px;">Change password</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                <?php if (isset($_GET['error'])) { ?>
-                  <p class="error" role="alert"><?php echo $_GET['error']; ?></p>
-                <?php } ?>
               </div>
               <div class="modal-body">
+                <div id="alert-info-db" value="3" style="display:none" class="alert alert-danger incorrectpassword alert-dismissible fade show mt-3 alert-box-db" role="alert">
+                </div>
                 <a class="dropdown-item d-flex flex-column align-items-left">
-                  <label class="change-pass-label">New Password</label>
-                  <input type="password" name="np" class="form-control mb-3" placeholder="New Password" class="change-pass-input">
+                  <label class="change-pass-label required">New Password</label>
+                  <input type="password" name="np" id="newPassword" class="form-control mb-3" placeholder="New Password" class="change-pass-input" required>
                 </a>
                 <input type="hidden" name="op" placeholder="Old Password">
                 <div class="mb-3">
                   <a class="dropdown-item d-flex flex-column align-items-left">
-                    <label class="change-pass-label">Confirm New Password</label>
-                    <input type="password" name="c_np" class="form-control" placeholder="Confirm New Password" class="change-pass-input">
+                    <label class="change-pass-label required">Confirm New Password</label>
+                    <input type="password" name="c_np" id="confirmPassword" class="form-control" placeholder="Confirm New Password" class="change-pass-input" required>
                   </a>
-                  <button class="btn btn-primary ml-4 mb-2 mt-4 " style="font-size: 14px;"  type="submit">CHANGE</button>
+                  <button class="btn btn-primary ml-4 mb-2 mt-4 " style="font-size: 14px;" id="Changebtn" type="submit">CHANGE</button>
                 </div>
               </div>
             </div>
@@ -272,8 +271,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
                 <th style="font-weight: 600;" scope="col">Id</th>
                 <th style="font-weight: 600;"  scope="col">DB</th>
                 <th style="font-weight: 600;"  scope="col">Environment</th>
-                <th style="font-weight: 600;"  scope="col">Initiated Date</th>
-                <th style="font-weight: 600;"  scope="col">Completed Date</th>
+                <th style="font-weight: 600;"  scope="col">Initiated Time</th>
+                <th style="font-weight: 600;"  scope="col">Completed Time</th>
                 <th style="font-weight: 600;"  scope="col">Time Taken</th>
                 <th style="font-weight: 600;"  scope="col">Initiated By</th>
                 <th style="font-weight: 600;"  scope="col">Status</th>
@@ -387,6 +386,39 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])) {
       $(document).ready(function() {
         $('#Model-hello').click(function(){
             $('#passwordModal').modal('show');
+        });
+      });
+
+      let password = '';
+      let confirmPassword = '';
+
+
+      $(document).ready(function() {
+        // $('#Changebtn').attr('disabled', 'disabled');
+        $('#Model-hello').click(function() {
+          $('#passwordModal').modal('show');
+        });
+
+        $("#newPassword").keyup(function() {
+          // localStorage.setItem('newPassword',$(this).val())
+          password = $(this).val();
+          if (password == '' && confirmPassword == '') {
+            $('.incorrectpassword').attr('style', 'display:none');
+          }
+        });
+        $("#confirmPassword").keyup(function() {
+          confirmPassword = $(this).val();
+
+          if (password == confirmPassword) {
+            $('#Changebtn').removeAttr('disabled');
+            $('.incorrectpassword').attr('style', 'display:none');
+
+
+          } else {
+            $('#Changebtn').attr('disabled', 'disabled');
+            $('.incorrectpassword').attr('style', 'display:block').text('Confirm password is incorrect please check again');
+          }
+
         });
       });
 

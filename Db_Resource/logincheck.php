@@ -21,10 +21,10 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 	// $email = validate($_POST['email']);
 
 	if (empty($email)) {
-		header("Location: uat.php?error=User Name is required");
+		header("Location: login.php?error=User Name is required");
 	    exit();
 	}else if(empty($pass)){
-        header("Location: uat.php?error=Password is required");
+        header("Location: login.php?error=Password is required");
 	    exit();
 	}else{
 		// hashing the password
@@ -48,11 +48,11 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             	header("Location: uat.php");
 		        exit();
             }else{
-				header("Location: login.php?error=Incorect User name or password");
+				header("Location: login.php?error=Incorrect User name or password");
 		        exit();
 			}
 		}else{
-			header("Location: login.php?error=Incorect User name or password");
+			header("Location: login.php?error=Incorrect User name or password");
 	        exit();
 		}
 	}

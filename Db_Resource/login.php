@@ -52,7 +52,7 @@
               <div class="">
                 <a href="index.html" class="logo d-flex flex-column align-items-center w-auto mb-3">
                   <img src="images/logo.png"  alt="" style="max-height: 75px;"><br>
-                  <span class="d-none d-lg-block">Pharmapod DB Resourcing</span>
+                  <span class="d-none d-lg-block">DB Resourcing</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -65,7 +65,7 @@
                     <!-- <p class="text-center small">Enter your username & password to login</p> -->
                   </div>
 
-                  <form class="row g-3 needs-validation" action="logincheck.php" method="post" autocomplete="on" novalidate>
+                  <form class="row g-3 needs-validation" action="logincheck.php" method="post" autocomplete="off" novalidate>
                   <?php if (isset($_GET['error'])) { ?>
      		<p  style="color:red"class="error"><?php echo $_GET['error']; ?></p>
      	<?php } ?>

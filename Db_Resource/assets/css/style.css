@@ -13,8 +13,13 @@
   overflow-x: hidden;
 }
 #commentsVal{
-  overflow:hidden!important;text-overflow: ellipsis!important; white-space:nowrap !important;max-width:80px!important;height: 72px!important;
+  overflow:hidden!important;text-overflow: ellipsis!important; white-space:nowrap !important;max-width:80px!important;height: 30px!important;
 }
+.required:after {
+  content:" *";
+  color: red;
+}
+
 
 .link-nav{
   display: flex;

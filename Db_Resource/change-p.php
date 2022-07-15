@@ -1,3 +1,4 @@
+
 <?php 
 session_start();
 
@@ -9,23 +10,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['username'])  && isset($_SESSION['
 if (isset($_POST['np'])
     && isset($_POST['c_np'])) {
 
-	function validate($data){
-       $data = trim($data);
-	   $data = stripslashes($data);
-	   $data = htmlspecialchars($data);
-	   return $data;
-	}
+// print_r($_POST);
+// die;
+
     // $op = validate($_POST['op']);
-	$np = validate($_POST['np']);
-	$c_np = validate($_POST['c_np']);
-    
-    if(empty($np)){
-      header("Location: uat.php.php?error=New Password is required");
-	  exit();
-    }else if($np !== $c_np){
-      header("Location: uat.php?error=The confirmation password  does not match");
-	  exit();
-    }else {
+	$np = $_POST['np'];
+	$c_np = $_POST['c_np'];
     	// hashing the password
     	// $op = ($op);
     	// $np = ($np);
@@ -35,9 +25,12 @@ if (isset($_POST['np'])
 		//  print_r($op);
 		//  die;
 
-        $sql = "SELECT * FROM users WHERE id='$id' AND password='$op'";
+        $sql = "SELECT * FROM users WHERE id='$id' ";
 		// var_dump($sql);
         $result = mysqli_query($conn, $sql);
+		// echo '<pre>';
+		// print_r($result);
+		// die;
 		 
         if(mysqli_num_rows($result) === 1){
         	
@@ -45,19 +38,11 @@ if (isset($_POST['np'])
         	          SET password='$np'
         	          WHERE id='$id'";
         	$query_run=mysqli_query($conn, $sql_2);
+			header("Location: uat.php");
+			exit();
         	
-			if($query_run){
-				$_SESSION['success']="Your password has been changed successfully";
-				header("Location: uat.php");
-				exit();
-			}else{
-				echo "something went wrong";
-			}
-			
-			
-
         }else {
-        	header("Location: uat.php?error=Incorrect password");
+        	header("Location: uat.php");
 	        exit();
         }
 
@@ -68,10 +53,4 @@ if (isset($_POST['np'])
 	// header("Location: index.php");
 	echo 'Something Went Wrong';
 	exit();
-}
-
-}else{
-    //  header("Location: index.php");
-	echo 'Something Went Wrong';
-     exit();
 }
