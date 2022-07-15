@@ -19,12 +19,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard - Resources</title>
+    <title>DB Resources</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="images/logo.png" width="100px" height="100px" rel="icon">
+    <link href="images/logo.png" width="100px" height="100px" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -185,7 +185,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
       <?php if ($checkCount !== 0) { ?>
         <div class="row">
           <div id="alert-info-db" value="3" class="alert alert-danger alert-dismissible fade show mt-3 alert-box-db" role="alert">
-            <MARquee style="font-size:bold;font-size: 20px;">The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> Database is currently resourcing...You can resource the <?php echo $checkRecord['environment']; ?> <?php echo $checkRecord['db']; ?> Database after the current resourcing is Completed </MARquee>
+            <MARquee style="font-size:bold;font-size: 20px;">The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> Database is currently being resourced. You can perform next DB resourcing on <?php echo $checkRecord['environment']; ?> platform after the current resourcing is Completed.</MARquee>
           </div>
         </div>
       <?php } ?>
@@ -231,9 +231,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
                   $enddate = $date->modify("-3 days")->format('Y-m-d');
                   $datetime = date("Y-m-d\TH:i:s");
                   ?>
-                <input id="party" type="datetime-local" name="partydate" value="date" class="form-control" style="width: position: relative; width: 60.5% ;" min="2022-06-15T08:30" max="<?php
+                <input id="party" type="date" name="partydate" value="date" class="form-control" style="width: position: relative; width: 60.5% ;" min="2022-06-15" max="<?php
                                                                                                                                                                                             echo $enddate;
-                                                                                                                                                                                            ?>T16:30">
+                                                                                                                                                                                            ?>">
                 <!-- <input type="submit" name="submit" value="submit"> -->
                 <!-- </form> -->
                 <div class="mb-3">
@@ -282,7 +282,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
 
       <div class="card mt-2">
         <div class="card-body">
-          <h5 class="card-title">Resource History</h5>
+          <h5 class="card-title">UAT Resource History</h5>
 
           <!-- Table with hoverable rows -->
           <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -303,7 +303,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
               <?php
                 //$sql = "SELECT * FROM requests ORDER BY id ASC";
 
-                $sql = "select * from requests r left join users u on r.requested_by=u.id order by r.id desc";
+                $sql = "select * from requests r left join users u on r.requested_by=u.id order by r.id asc";
 
 
 
@@ -314,16 +314,21 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
 
                   while ($row = $result->fetch_assoc()) {
                     $UserName = ($row["requested_by"] == $_SESSION['id']) ? $_SESSION['username'] : $row["username"];
+                    $inpor=null;
                     if ($row['status'] == 0) {
                       $status = '<P style="color:Orange">Submitted</P>';
                     } elseif ($row['status'] == 2) {
                       $status =  '<P style="color:Blue">In Progress</P>';
+                       $inpor=$row['status'];
                     } elseif ($row['status'] == 3) {
-                      $status =  '<P style="color:green">Success</P>';
+                      $status =  '<P style="color:green">Completed</P>';
                     } else {
                       $status = '<P style="color:red">Failed</P>';
                     }
+                 
 
+                    
+                    $acc=$inpor;
 
                     $date1 = new DateTime($row["created_at"]);
                     $date2 = new DateTime($row["completed_at"]);
@@ -339,7 +344,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
 
                       //  $tableColor = ($row["status"] == 2) ? '<tr style="background:lightblue">': '';
                       $newDate = date("M d, Y h:m:s", strtotime($row["completed_at"]));
-                      echo "<tr>{$tableColor}";
+                      echo "<tr id='table'>{$tableColor}";
                       echo " <td class='text-center text-muted' style='padding-top:25px'>{$i}</td>";
                       echo " <td class='text-center text-muted' style='padding-top:25px'>{$row["db"]}</td>";
                       echo " <td class='text-center text-muted' style='padding-top:25px'>{$ChangeEnvironment}</td>";
@@ -396,7 +401,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
         console.log(simple, 'hi');
         if (simple == 1) {
           Swal.fire({
-            html: "<h4 style='color:red;margin-top:1rem'>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> Database is currently resourcing. You can resource the <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> after the current resourcing is Completed</h4>",
+            html: "<h4 style='color:red;margin-top:1rem'>The <?php echo $checkRecord['environment']; ?> Environment <?php echo $checkRecord['db']; ?> Database is currently being resourced. You can perform next DB resourcing on <?php echo $checkRecord['environment']; ?> platform after the current resourcing is Completed.</h4>",
             confirmButtonText: "<h4 style='margin:0px !important;background:#007bff !important'>Okay</h4>",
           });
         } else {
@@ -414,6 +419,19 @@ if (isset($_SESSION['id']) && isset($_SESSION['username']) && isset($_SESSION['p
 
 
       $(document).ready(function() {
+//         
+//         let statusInt = parseInt(status)
+//         // console.log(statusInt === 3);
+//         console.log(status);
+
+//         if(statusInt === 3){
+          
+//           $('#table').attr('style','background:#a8edb8')
+//         } if(statusInt === 2){
+//           console.log(statusInt === 2,'inpro');
+
+// $('#table').attr('style','background:lightblue')
+// }  
         // $('#Changebtn').attr('disabled', 'disabled');
         $('#Model-hello').click(function() {
           $('#passwordModal').modal('show');
